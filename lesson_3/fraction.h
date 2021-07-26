@@ -28,6 +28,9 @@ public:
     friend Fraction operator-(const Fraction &frct_1, const Fraction &frct_2);
     friend Fraction operator-(const Fraction &frct, int n);
     friend Fraction operator-(int n, const Fraction &frct);
+    
+    //... Пока доделать не успел
+
     ~Fraction();
    
 };
