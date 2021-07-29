@@ -1,10 +1,10 @@
 #ifndef FIGURES_H
 #define FIGURES_H
 
-class Figure
+class Figure                   // Интерфейсный класс не имеющий переменных членов.
 {
 public:
-    virtual double area() = 0;
+    virtual double area() = 0; // единственный метод является чисто виртуальной функцией
 };
 
 class Parallelogram : public Figure
@@ -21,8 +21,8 @@ public:
     double getB() const;
     double getAlpha() const;
     void setAlpha(double alpha);
-    double area() override;
-};
+    double area() override;  // Дочение классы дожны переопределять виртуальные методы интерфейсного родительского класса
+}; // если хотя бы один метод родительского интерфейсного класса не будет переопределён, то дочерний класс становится абстрактным! 
 
 
 
