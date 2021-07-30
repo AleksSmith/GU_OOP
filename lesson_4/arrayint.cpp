@@ -2,9 +2,9 @@
 
 #include <cassert> // для assert()
 
-ArrayInt::ArrayInt(): m_length(0), m_data(nullptr){ }
+ArrayInt::ArrayInt() : m_length(0), m_data(nullptr) {}
 
-ArrayInt::ArrayInt(int length): m_length(length)
+ArrayInt::ArrayInt(int length) : m_length(length)
 {
     assert(length >= 0);
 
@@ -27,17 +27,17 @@ void ArrayInt::erase()
     m_data = nullptr;
     m_length = 0;
 }
-    
+
 int ArrayInt::getLength() { return m_length; }
 
-int& ArrayInt::operator[](int index)
+int &ArrayInt::operator[](int index)
 {
     assert(index >= 0 && index < m_length);
     return m_data[index];
 }
 
 // Функция resize изменяет размер массива. Все существующие элементы сохраняются. Процесс медленный
-void ArrayInt::resize(int newLength) 
+void ArrayInt::resize(int newLength)
 {
     // Если массив уже нужной длины — return
     if (newLength == m_length)
@@ -61,7 +61,7 @@ void ArrayInt::resize(int newLength)
         int elementsToCopy = (newLength > m_length) ? m_length : newLength;
 
         // Поочередно копируем элементы
-        for (int index=0; index < elementsToCopy ; ++index)
+        for (int index = 0; index < elementsToCopy; ++index)
             data[index] = m_data[index];
     }
 
@@ -75,3 +75,29 @@ void ArrayInt::resize(int newLength)
     m_length = newLength;
 }
 
+void ArrayInt::insertBefore(int value, int index)
+{
+    // Проверка корректности передаваемого индекса
+    assert(index >= 0 && index <= m_length);
+
+    // Создаем новый массив на один элемент больше старого массива
+    int *data = new int[m_length + 1];
+
+    // Копируем все элементы до index-а
+    for (int before = 0; before < index; ++before)
+        data[before] = m_data[before];
+
+    // Вставляем новый элемент в новый массив
+    data[index] = value;
+
+    // Копируем все значения после вставляемого элемента
+    for (int after = index; after < m_length; ++after)
+        data[after + 1] = m_data[after];
+
+    // Удаляем старый массив и используем вместо него новый
+    delete[] m_data;
+    m_data = data;
+    ++m_length;
+}
+
+void ArrayInt::push_back(int value) { insertBefore(value, m_length); }
